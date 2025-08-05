@@ -16,3 +16,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env:
+  value: REPO
