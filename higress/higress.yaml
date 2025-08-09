@@ -97,6 +97,22 @@ metadata:
     app.kubernetes.io/name: higress-gateway
 data:
   higress: |-
+    mcpServer:
+    sse_path_suffix: /sse  # Path suffix for SSE connections
+    enable: true          # Enable MCP Server
+    redis:
+      address: redis-stack-server.higress-system.svc.cluster.local:6379 # Redis service address
+      username: "" # Redis username (optional)
+      password: "" # Redis password (optional)
+      db: 0 # Redis database (optional)
+    match_list:          # MCP Server Session Persistence Routing Rules (When the following paths are matched, they will be recognized as an MCP session, and session persistence will be maintained through mechanisms such as SSE)
+      - match_rule_domain: "*"
+        match_rule_path: /postgres
+        match_rule_type: "prefix"
+      - match_rule_domain: "*"
+        match_rule_path: /user
+        match_rule_type: "prefix"
+    servers: []
     downstream:
       connectionBufferLimits: 32768
       http2:
